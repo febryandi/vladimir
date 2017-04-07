@@ -1,7 +1,6 @@
 package automationFramework;
 
-import java.util.NoSuchElementException;
-
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,8 +17,12 @@ public class FirstTestCase {
 	 * @param args
 	 * @throws InterruptedException
 	 */
+	
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
+								
+		Logger log = Logger.getLogger("febLogger");
+		
 		// Create a new instance of the webbrowser driver
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--start-maximized");
@@ -27,8 +30,8 @@ public class FirstTestCase {
 		WebDriver driver;
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Febryandi\\workspace\\driver\\chromedriver.exe");
 		driver =new ChromeDriver(options);
-
-		
+						
+		log.debug("opening website");
         //Launch the Online Store Website
 		driver.get("https://charlie.orami.co.id");
  
@@ -69,7 +72,7 @@ public class FirstTestCase {
 	
         // Close the driver
         driver.quit();
-
+        log.debug("closing website");
 	}
 
 }
