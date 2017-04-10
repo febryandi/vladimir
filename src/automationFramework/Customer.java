@@ -2,16 +2,15 @@ package automationFramework;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 public class Customer extends LogDriver{
 	
-	public static void doLogin(){
-		
-		chromeMethod();
-		
-		log.info("opening website");
+		public static void doLogin(){
+				
         //Launch the Online Store Website
 		driver.get("https://charlie.orami.co.id");
+		log.info("opening website");
  		
 		//find login button
 		driver.findElement(By.cssSelector("button.btn.btn-primary.btn-sm")).click();
@@ -26,15 +25,16 @@ public class Customer extends LogDriver{
 		
 		//click button login
 		driver.findElement(By.id("button-login")).click();
-		
+				
 		boolean existElement;		
 	    try {
-	        driver.findElement(By.className("icon_nav"));
+	        fluentWait(By.className("icon_nav"));
+	        existElement=true;
+	        log.info("icon_nav found");
 	    } catch (Exception e) {
 	    	existElement=false;
-	    }
-	    
-	    existElement=true;
+	        log.info("icon_nav not found");
+	    }  	    
 	    
 	    if(existElement==true){
 	    	log.info("Login success");
@@ -42,6 +42,31 @@ public class Customer extends LogDriver{
 	    	log.info("Login failed");
 	    }
 	    //close browser
-	    driver.quit();
+	    //driver.quit();
     }
+	
+	public static void doLogout(){
+		
+		boolean loggedIn;		
+	    try {
+	    	fluentWait(By.className("icon_nav"));
+	        loggedIn=true;
+	        log.info("icon_nav found");
+	    } catch (Exception e) {
+	    	loggedIn=false;
+	        log.info("icon_nav not found");
+	    }    
+	    
+	    
+	    if(loggedIn==true){
+	    	log.info("finding logout");
+	    	Actions hover = new Actions(driver);
+	    	hover.moveToElement(driver.findElement(By.className("icon_nav"))).build().perform();
+	    	hover.moveToElement(driver.findElement(By.linkText("Logout"))).build().perform();
+	    	driver.findElement(By.linkText("Logout")).click();
+	    	log.info("Logout successfully");
+	    }else{
+	    	log.info("User is not logged in");
+	    }
+	}
 }

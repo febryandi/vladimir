@@ -12,9 +12,10 @@ public class FirstTestCase {
 	 */
 	
 	public static void main(String[] args) throws InterruptedException {
-		// TODO Auto-generated method stub
-		        
+		
+		LogDriver.chromeMethod();
         Customer.doLogin();
+        Customer.doLogout();
         
 	}
 
