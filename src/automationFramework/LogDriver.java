@@ -11,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-
 import com.google.common.base.Function;
 
 public class LogDriver {
@@ -31,7 +30,7 @@ public class LogDriver {
 		}
 		//fluent wait function, timout 30sc and checking every 5 sc
 		public static WebElement fluentWait(final By locator){
-			Wait<WebDriver> wait =new FluentWait<WebDriver>(driver)
+			Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 					.withTimeout(30, TimeUnit.SECONDS)
 					.pollingEvery(5, TimeUnit.SECONDS)
 					.ignoring(NoSuchElementException.class);
