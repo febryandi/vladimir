@@ -18,13 +18,18 @@ public class FirstTestCase {
 		
 		LogDriver.chromeMethod();
         Customer.doLogin();
-        Search.searchBySKU("LAUN-ATTA-013A");
-        Product.clickFirstProduct();
-        Product.addSimpleProd(2);
-        Checkout.checkoutCart();
-        Checkout.cartLog();
-        Customer.doLogout();
-        LogDriver.exitBrowser();
+      //search term
+//        Search.searchBySKU("LAUN-ATTA-013A");
+//        Product.clickFirstProduct();
+        //quantity
+//        Product.addSimpleProd(2);
+//        Checkout.checkoutCart();
+        Checkout.checkoutSkipCart();
+        //address index, shipping method
+        Checkout.chooseAddress(2,"express");
+//        Checkout.cartLog();
+//        Customer.doLogout();
+//        LogDriver.exitBrowser();
         
 	}
 	
