@@ -36,7 +36,7 @@ public class Customer extends LogDriver{
 	        log.info("icon_nav not found");
 	    }  	    
 	    
-	    if(existElement==true){
+	    if(existElement){
 	    	log.info("Login success");
 	    }else{
 	    	log.info("Login failed");
@@ -58,7 +58,7 @@ public class Customer extends LogDriver{
 	    }    
 	    
 	    
-	    if(loggedIn==true){
+	    if(loggedIn){
 	    	log.info("finding logout");
 	    	Actions hover = new Actions(driver);
 	    	hover.moveToElement(driver.findElement(By.className("icon_nav"))).build().perform();

@@ -18,7 +18,7 @@ public class Product extends LogDriver{
 	        log.info("search keyword not found");
 	    }  
 		
-	    if(result==true){
+	    if(result){
 
 	    	Actions hover = new Actions(driver);
 	    	
@@ -44,7 +44,7 @@ public class Product extends LogDriver{
 	        log.info("No Product Found in Detail Page");
 	    }
 	    
-	    if(itemFound==true){
+	    if(itemFound){
 	    	log.info("Input qty = "+quantity);
 	    	driver.findElement(By.className("qty"))
 	    		.sendKeys(Keys.chord(Keys.CONTROL,"a"), String.valueOf(quantity));

@@ -29,10 +29,10 @@ public class LogDriver {
 			log.info("Driver launch successfully");
 			
 		}
-		//fluent wait function, timout 30sc and checking every 5 sc
+		//fluent wait function, timout 10sc and checking every 2 sc
 		public static WebElement fluentWait(final By locator){
 			Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-					.withTimeout(30, TimeUnit.SECONDS)
+					.withTimeout(10, TimeUnit.SECONDS)
 					.pollingEvery(2, TimeUnit.SECONDS)
 					.ignoring(NoSuchElementException.class);
 			
@@ -42,5 +42,8 @@ public class LogDriver {
 				}
 			});
 			return foundElement;			
-		}				
+		}
+		public static void exitBrowser(){
+			driver.quit();
+		}
 }
