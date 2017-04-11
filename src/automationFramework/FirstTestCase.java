@@ -15,7 +15,10 @@ public class FirstTestCase {
 		
 		LogDriver.chromeMethod();
         Customer.doLogin();
-        Customer.doLogout();
+        Search.searchBySKU("LAUN-ATTA-013A");
+        Product.clickFirstProduct();
+        Product.addSimpleProd(2000);
+        //Customer.doLogout();
         
 	}
 
