@@ -228,4 +228,59 @@ public class Checkout extends LogDriver {
 		}
 	}
 	
+	public static void orderReviewLog(){
+		try {
+	        WebElement address = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[2]/div[2]/div/p"));
+			log.info("address : "+address.getText());
+	    } catch (Exception e) {
+	        log.info("address 404");
+	    }
+		try {
+			WebElement payment = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[3]/div[2]"));
+			log.info("payment method : "+payment.getText());
+	    } catch (Exception e) {
+	        log.info("payment 404");
+	    }
+		try {
+			WebElement shipping = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[3]/div[3]"));
+			log.info("shipping method : "+shipping.getText());
+	    } catch (Exception e) {
+	        log.info("shipping 404");
+	    }
+		try {
+			WebElement subtotal = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[2]/div[2]"));
+			log.info("Subtotal : "+subtotal.getText());
+	    } catch (Exception e) {
+	        log.info("Subtotal 404");
+	    }
+		try {
+			WebElement shippingFee = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[3]/div[2]"));
+			log.info("shipping fee : "+shippingFee.getText());
+	    } catch (Exception e) {
+	        log.info("shippingFee 404");
+	    }
+		try {
+			WebElement discount = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[4]/div[2]"));
+			log.info("discount : "+discount.getText());
+	    } catch (Exception e) {
+	        log.info("discount 404");
+	    }
+		try {
+			WebElement oramiCredit = fluentWait(By.xpath("//*[@id='points_amount']/div[2]"));
+			log.info("oramiCredit : "+oramiCredit.getText());
+	    } catch (Exception e) {
+	        log.info("oramiCredit 404");
+	    }
+		try {
+			WebElement grandTotal = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[6]/div[2]"));
+			log.info("grandTotal : "+grandTotal.getText());
+	    } catch (Exception e) {
+	        log.info("grandTotal 404");
+	    }
+				
+	}
+	public static void placeOrder(){
+		driver.findElement(By.id("button-place-order")).click();
+	}
+	
 }

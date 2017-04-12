@@ -24,12 +24,13 @@ public class FirstTestCase {
         //quantity
 //        Product.addSimpleProd(2);
 //        Checkout.checkoutCart();
+//      Checkout.cartLog();
         Checkout.checkoutSkipCart();
         //address index, shipping method
         Checkout.chooseAddress(2,"free");
-        //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfer mandiri
-        Checkout.choosePayment("vtdirect");
-//        Checkout.cartLog();
+        //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfermandiri
+        Checkout.choosePayment("transferbni");
+        Checkout.orderReviewLog();
 //        Customer.doLogout();
 //        LogDriver.exitBrowser();
         
