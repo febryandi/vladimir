@@ -105,4 +105,127 @@ public class Checkout extends LogDriver {
     		driver.findElement(By.xpath("//*[@id='form-shipping']/div[3]/button")).click();
     	}
 	}
+	
+	public static void choosePayment(String paymentMethod){
+		
+		log.info("Desired paymentMethod = "+paymentMethod);
+		
+		switch(paymentMethod){
+			case  "klikbca" :
+				klikbcaPayment();
+				break;
+			case "xendit" :
+				xenditPayment();
+				break;
+			case "vtdirect" :
+				vtdirectPayment();
+				break;
+			default :
+				genericPayment(paymentMethod);
+		}
+	}
+	
+	public static void genericPayment(String paymentMethod){
+		boolean isExist;
+		try {
+	    	WebElement payment=fluentWait(By.id(paymentMethod));
+	    	payment.click();
+	    	log.info("Payment method chosen = "+paymentMethod);
+	    	isExist=true;
+	    } catch (Exception e) {
+	    	isExist=false;
+	    	log.info("failed to choose payment method");
+	    }
+		if(isExist){
+			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
+			log.info("Continue to Order Review");
+		}
+	}
+	
+	public static void klikbcaPayment(){
+		boolean isExist;
+		try {
+	    	WebElement payment=fluentWait(By.id("klikbca"));
+	    	payment.click();
+	    	log.info("Payment method chosen = klikbca");
+	    	driver.findElement(By.id("klikbca_user_id")).sendKeys("adminstage");
+	    	isExist=true;
+	    } catch (Exception e) {
+	    	isExist=false;
+	    	log.info("failed to choose payment method");
+	    }
+		if(isExist){
+			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
+			log.info("Continue to Order Review");
+		}
+	}
+
+	public static void vtdirectPayment(){
+		boolean isExist;
+		try {
+	    	WebElement payment=fluentWait(By.id("vtdirect"));
+	    	payment.click();
+	    	log.info("Payment method chosen = Credit Card vtdirect");
+	    	String ccbin="4811111111111114";
+	    	String ccname="febry";
+	    	String cid="123";
+	    	String month="02";
+	    	String year="2020";
+	    	driver.findElement(By.id("vtdirect_cc_number")).sendKeys(ccbin);
+	    	log.info("CC no= "+ccbin);
+	    	driver.findElement(By.id("vtdirect_cc_owner")).sendKeys(ccname);
+	    	log.info("ccname= "+ccname);
+	    	driver.findElement(By.id("vtdirect_cc_cid")).sendKeys(cid);
+	    	log.info("cc cid= "+cid);
+	    	Select monthDropdown = new Select(driver.findElement(By.id("vtdirect_expiration")));
+	    	monthDropdown.selectByValue(month);
+	    	log.info("cc month= "+month);
+	    	Select yearDropdown = new Select(driver.findElement(By.id("vtdirect_expiration_yr")));
+	    	yearDropdown.selectByValue(year);
+	    	log.info("cc year= "+year);	
+	    	isExist=true;
+	    } catch (Exception e) {
+	    	isExist=false;
+	    	log.info("failed to choose payment method");
+	    }
+		if(isExist){
+			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
+			log.info("Continue to Order Review");
+		}
+	}
+	
+	public static void xenditPayment(){
+		boolean isExist;
+		try {
+	    	WebElement payment=fluentWait(By.id("vtdirect"));
+	    	payment.click();
+	    	log.info("Payment method chosen = Credit Card Xendit");
+	    	String ccbin="4000000000000002";
+	    	String ccname="febry";
+	    	String cid="123";
+	    	String month="02";
+	    	String year="2020";
+	    	driver.findElement(By.id("xendit_cc_number")).sendKeys(ccbin);
+	    	log.info("CC no= "+ccbin);
+	    	driver.findElement(By.id("xendit_cc_owner")).sendKeys(ccname);
+	    	log.info("ccname= "+ccname);
+	    	driver.findElement(By.id("xendit_cc_cid")).sendKeys(cid);
+	    	log.info("cc cid= "+cid);
+	    	Select monthDropdown = new Select(driver.findElement(By.id("xendit_expiration")));
+	    	monthDropdown.selectByValue(month);
+	    	log.info("cc month= "+month);
+	    	Select yearDropdown = new Select(driver.findElement(By.id("xendit_expiration_yr")));
+	    	yearDropdown.selectByValue(year);
+	    	log.info("cc year= "+year);	
+	    	isExist=true;
+	    } catch (Exception e) {
+	    	isExist=false;
+	    	log.info("failed to choose payment method");
+	    }
+		if(isExist){
+			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
+			log.info("Continue to Order Review");
+		}
+	}
+	
 }

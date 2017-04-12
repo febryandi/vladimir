@@ -26,7 +26,9 @@ public class FirstTestCase {
 //        Checkout.checkoutCart();
         Checkout.checkoutSkipCart();
         //address index, shipping method
-        Checkout.chooseAddress(2,"express");
+        Checkout.chooseAddress(2,"free");
+        //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfer mandiri
+        Checkout.choosePayment("vtdirect");
 //        Checkout.cartLog();
 //        Customer.doLogout();
 //        LogDriver.exitBrowser();
