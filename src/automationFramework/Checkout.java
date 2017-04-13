@@ -62,6 +62,7 @@ public class Checkout extends LogDriver {
 	    } catch (Exception e) {
 	        log.info("Grandtotal 404");
 	    }
+		driver.findElement(By.xpath("//*[@id='target-summary']/div/div[2]/div[2]/div[1]/div[4]/div/div/div/div/a/button")).click();
 	}
 	
 	public static void chooseAddress(int index, String shipmentMethod) throws InterruptedException{
@@ -197,7 +198,7 @@ public class Checkout extends LogDriver {
 	public static void xenditPayment(){
 		boolean isExist;
 		try {
-	    	WebElement payment=fluentWait(By.id("vtdirect"));
+	    	WebElement payment=fluentWait(By.id("xendit"));
 	    	payment.click();
 	    	log.info("Payment method chosen = Credit Card Xendit");
 	    	String ccbin="4000000000000002";
@@ -276,11 +277,28 @@ public class Checkout extends LogDriver {
 			log.info("grandTotal : "+grandTotal.getText());
 	    } catch (Exception e) {
 	        log.info("grandTotal 404");
-	    }
-				
+	    }				
 	}
+	
 	public static void placeOrder(){
 		driver.findElement(By.id("button-place-order")).click();
+	}
+	
+	public static void successPageLog(){
+		try {
+			WebElement increment_id = fluentWait(By.xpath("/html/body/div[3]/div[6]/div/div[2]/div[1]/div/div/p/span[1]"));
+			log.info("increment_id : "+increment_id.getText());
+	    } catch (Exception e) {
+	        log.info("increment_id 404");
+	    }
+		try {
+			WebElement orderStatus = fluentWait(By.xpath("/html/body/div[3]/div[6]/div/div[2]/div[1]/div/div/p/span[2]"));
+			log.info("orderStatus : "+orderStatus.getText());
+	    } catch (Exception e) {
+	        log.info("orderStatus 404");
+	    }
+	    
+		
 	}
 	
 }

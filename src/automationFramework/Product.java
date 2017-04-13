@@ -29,7 +29,7 @@ public class Product extends LogDriver{
 	    			.xpath("//div[@itemprop='itemListElement'][1]"))).build().perform();
 	    	log.info("clicking the first item found");
 	    	driver.findElement(By
-	    			.xpath("//div[@class='prod-name'][1]")).click();
+	    			.xpath("//div[@itemprop='itemListElement'][1]")).click();
 	    }
 	}
 	

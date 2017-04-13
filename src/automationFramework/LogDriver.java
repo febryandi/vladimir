@@ -29,11 +29,11 @@ public class LogDriver {
 			log.info("Driver launch successfully");
 			
 		}
-		//fluent wait function, timout 10sc and checking every 2 sc
+		//fluent wait function, timout 6sc and checking every 1 sc
 		public static WebElement fluentWait(final By locator){
 			Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-					.withTimeout(10, TimeUnit.SECONDS)
-					.pollingEvery(2, TimeUnit.SECONDS)
+					.withTimeout(6, TimeUnit.SECONDS)
+					.pollingEvery(1, TimeUnit.SECONDS)
 					.ignoring(NoSuchElementException.class);
 			
 			WebElement foundElement = wait.until(new Function<WebDriver, WebElement>(){

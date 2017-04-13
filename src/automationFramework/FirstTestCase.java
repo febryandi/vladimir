@@ -18,19 +18,22 @@ public class FirstTestCase {
 		
 		LogDriver.chromeMethod();
         Customer.doLogin();
-      //search term
-//        Search.searchBySKU("LAUN-ATTA-013A");
-//        Product.clickFirstProduct();
+        //search term
+        Search.searchBySKU("TOIL-FORM-004A");	
+//        Search.searchBySKU("SUSU-MORI-006A");
+        Product.clickFirstProduct();
         //quantity
-//        Product.addSimpleProd(2);
-//        Checkout.checkoutCart();
-//      Checkout.cartLog();
-        Checkout.checkoutSkipCart();
+        Product.addSimpleProd(1);
+        Checkout.checkoutCart();
+        Checkout.cartLog();
+//        Checkout.checkoutSkipCart();
         //address index, shipping method
-        Checkout.chooseAddress(2,"free");
+        Checkout.chooseAddress(6,"free");
         //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfermandiri
-        Checkout.choosePayment("transferbni");
+        Checkout.choosePayment("xendit");
         Checkout.orderReviewLog();
+        Checkout.placeOrder();
+//        Checkout.successPageLog();
 //        Customer.doLogout();
 //        LogDriver.exitBrowser();
         
