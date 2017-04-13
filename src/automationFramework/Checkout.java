@@ -2,6 +2,7 @@ package automationFramework;
 
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -296,9 +297,66 @@ public class Checkout extends LogDriver {
 			log.info("orderStatus : "+orderStatus.getText());
 	    } catch (Exception e) {
 	        log.info("orderStatus 404");
-	    }
-	    
+	    }	
+	}
+	
+	public static void useVoucherCart(String voucher){		
+		WebElement voucherRes = null;
+				
+		try{			
+			WebElement buttonVoucher = fluentWait(By
+					.xpath("//*[@id='target-summary']/div/div[2]/div[2]/div[2]/div/div[2]/form/div/div/div[2]/button"));			
+			
+			JavascriptExecutor jse = (JavascriptExecutor)driver;
+			
+			if(buttonVoucher.getText().equalsIgnoreCase("gunakan")){
+				jse.executeScript("window.scrollBy(0,100)", "");
+				
+				useNewVoucherCart(voucher);
+			}else{
+				jse.executeScript("window.scrollBy(0,150)", "");
+				buttonVoucher.click();
+				voucherRes = fluentWait(By.xpath("/html/body/div[3]/div[5]/div/div/p"));
+		    	Thread.sleep(2500);
+				
+				if(voucherRes.getText()!=null && voucherRes.getText().contains("Voucher code has been successfully removed")){
+		    		log.info(voucherRes.getText());
+		    		useNewVoucherCart(voucher);
+		    	}else{
+		    		log.info("Error Message = "+voucherRes.getText());
+		    	}
+				
+			}
+		}catch(Exception e){
+			log.info(e);
+		}
 		
+	}
+	
+	public static void useNewVoucherCart(String voucher) throws InterruptedException{
+		log.info("voucher = "+voucher);
+		try {
+			WebElement voucherField = fluentWait(By.id("voucher-code"));
+			voucherField.sendKeys(voucher);
+			
+			driver.findElement(By.xpath("//*[@id='target-summary']/div/div[2]/div[2]/div[2]/div/div[2]/form/div/div/div[2]/button")).click();
+			
+			WebElement voucherRes = null;
+	    	try {
+	    		voucherRes = fluentWait(By.xpath("/html/body/div[3]/div[5]/div/div/p"));
+		    } catch (Exception e) {
+		        log.info("Failed to use voucher or timeout");
+		    }
+	    	
+	    	if(voucherRes.getText()!=null && voucherRes.getText().contains("has been applied")){
+	    		log.info(voucherRes.getText());
+	    	}else{
+	    		log.info("Error Message = "+voucherRes.getText());
+	    	}
+	    } catch (Exception e) {
+	        log.info("failed to find voucher field");
+	    }
+		Thread.sleep(3000);
 	}
 	
 }
