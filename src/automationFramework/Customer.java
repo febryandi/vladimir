@@ -12,6 +12,12 @@ public class Customer extends LogDriver{
 		driver.get("https://charlie.orami.co.id");
 		log.info("opening website");
  		
+
+//		driver.findElement(By.id("ematic_closeExitIntentOverlay_2_x_1")).click();
+//		driver.findElement(By.className("insRouletteClose")).click();
+		
+		
+		
 		//find login button
 		driver.findElement(By.cssSelector("button.btn.btn-primary.btn-sm")).click();
 		

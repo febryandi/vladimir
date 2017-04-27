@@ -24,14 +24,14 @@ public class FirstTestCase {
 //        Product.clickFirstProduct();
         //quantity
 //        Product.addSimpleProd(1);
-        Checkout.checkoutCart();
-        Checkout.useVoucherCart("feb008");
-        Checkout.cartLog();
-//        Checkout.checkoutSkipCart();
-        //address index, shipping method
-//        Checkout.chooseAddress(6,"free");
+//        Checkout.checkoutCart();
+//        Checkout.useVoucherCart("feb008");
+//        Checkout.cartLog();
+        Checkout.checkoutSkipCart();
+        //address index, shipping method Free,Express, Standard, Tempat
+        Checkout.chooseAddress(2,"Free");
         //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfermandiri
-//        Checkout.choosePayment("xendit");
+        Checkout.choosePayment("vtdirect");
 //        Checkout.orderReviewLog();
 //        Checkout.placeOrder();
 //        Checkout.successPageLog();

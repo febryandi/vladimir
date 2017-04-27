@@ -1,6 +1,5 @@
 package automationFramework;
 
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -69,7 +68,7 @@ public class Checkout extends LogDriver {
 	public static void chooseAddress(int index, String shipmentMethod) throws InterruptedException{
 		boolean addChosen;
 		try {
-	    	WebElement address=fluentWait(By.xpath("//select[@name='my_address']"));
+	    	WebElement address=fluentWait(By.xpath("//select[@id='my_address']"));
 	    	Select addressDropdown = new Select(address);
 	    	addressDropdown.selectByIndex(index);
 	    	log.info("address chosen");
@@ -87,25 +86,34 @@ public class Checkout extends LogDriver {
 	public static void chooseShipment(String shipmentMethod){
 		
 		log.info("Desired Shipping Method = "+shipmentMethod);
-		WebElement shipment=fluentWait(By.xpath("//select[@name='shipping_method']"));
-    	Select shipmentDropdown = new Select(shipment);
-    	
-    	List<WebElement> optionShipment = shipmentDropdown.getOptions();
-    	boolean shipFlag=false;
-    	
-    	for(WebElement temp: optionShipment){
-    		String label=temp.getText();
-    		if(label.toLowerCase().contains(shipmentMethod)){
-    			shipmentDropdown.selectByVisibleText(label);
-    			shipFlag=true;
-    			log.info("Shipping Method chosen = "+label);
-    		}
-    	}
-    	if(!shipFlag){
-    		log.info("Failed to choose Shipping Method");
-    	}else{
-    		driver.findElement(By.xpath("//*[@id='form-shipping']/div[3]/button")).click();
-    	}
+		try{
+//			WebElement shipment=fluentWait(By.xpath("//input[@id='shipping_method_radio' and contains(@value,'"+shipmentMethod+"')]"));
+			WebElement shipment=fluentWait(By.cssSelector("label[data-name*='"+shipmentMethod+"']"));
+			shipment.click();
+			log.info("Shipment choosen");
+			driver.findElement(By.xpath("//*[@id='form-shipping']/div[4]/button")).click();
+		} catch (Exception e) {
+			log.info("Failed to choose Shipping Method");
+		}
+								
+//    	Select shipmentDropdown = new Select(shipment);
+//    	
+//    	List<WebElement> optionShipment = shipmentDropdown.getOptions();
+//    	boolean shipFlag=false;
+//    	
+//    	for(WebElement temp: optionShipment){
+//    		String label=temp.getText();
+//    		if(label.toLowerCase().contains(shipmentMethod)){
+//    			shipmentDropdown.selectByVisibleText(label);
+//    			shipFlag=true;
+//    			log.info("Shipping Method chosen = "+label);
+//    		}
+//    	}
+//    	if(!shipFlag){
+//    		log.info("Failed to choose Shipping Method");
+//    	}else{
+//    		driver.findElement(By.xpath("//*[@id='form-shipping']/div[3]/button")).click();
+//    	}
 	}
 	
 	public static void choosePayment(String paymentMethod){
@@ -114,7 +122,7 @@ public class Checkout extends LogDriver {
 		
 		switch(paymentMethod){
 			case  "klikbca" :
-				klikbcaPayment();
+				internetBanking("bca-klik");
 				break;
 			case "xendit" :
 				xenditPayment();
@@ -122,51 +130,83 @@ public class Checkout extends LogDriver {
 			case "vtdirect" :
 				vtdirectPayment();
 				break;
+			case "klikpay" :
+				internetBanking("bca-klikpay");
+				break;
+			case "mandiriecash" :
+				internetBanking("mandiri-ecash");
+				break;
 			default :
 				genericPayment(paymentMethod);
 		}
 	}
 	
 	public static void genericPayment(String paymentMethod){
-		boolean isExist;
+		String paymentMethodLogo ="";
+		
+		switch(paymentMethod){
+		case  "transferbri" :
+			paymentMethodLogo="bri";
+			break;
+		case "transferbni" :
+			paymentMethodLogo="bni";
+			break;
+		case "transfermandiri" :
+			paymentMethodLogo="mandiri";
+			break;
+		default :
+			paymentMethodLogo="bca";
+		}
+				
 		try {
-	    	WebElement payment=fluentWait(By.id(paymentMethod));
+			driver.findElement(By.cssSelector("div[data-src='#modal-transfer-bank']")).click();
+	    	WebElement payment=fluentWait(By.cssSelector("div.logo-co.logo-co-"+paymentMethodLogo));
 	    	payment.click();
 	    	log.info("Payment method chosen = "+paymentMethod);
-	    	isExist=true;
+	    	
+			driver.findElement(By.xpath("//button[text()[contains(.,'Lanjut')]]")).click();
+			log.info("Continue to Order Review");
 	    } catch (Exception e) {
-	    	isExist=false;
 	    	log.info("failed to choose payment method");
 	    }
-		if(isExist){
-			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
-			log.info("Continue to Order Review");
-		}
+				
 	}
 	
-	public static void klikbcaPayment(){
+	public static void internetBanking(String key){
 		boolean isExist;
-		try {
-	    	WebElement payment=fluentWait(By.id("klikbca"));
-	    	payment.click();
-	    	log.info("Payment method chosen = klikbca");
-	    	driver.findElement(By.id("klikbca_user_id")).sendKeys("adminstage");
-	    	isExist=true;
-	    } catch (Exception e) {
-	    	isExist=false;
-	    	log.info("failed to choose payment method");
-	    }
+		driver.findElement(By.cssSelector("div[data-src='#modal-internet-banking']")).click();
+		if(key=="bca-klik"){
+			try {
+				WebElement payment=fluentWait(By.cssSelector("div.logo-co.logo-co-bca-klik"));
+		    	payment.click();
+		    	log.info("Payment method chosen = klikbca");
+		    	driver.findElement(By.id("klikbca_user_id")).sendKeys("adminstage");
+		    	isExist=true;
+		    } catch (Exception e) {
+		    	isExist=false;
+		    	log.info("failed to choose payment method");
+		    }
+		}else {
+			try {
+		    	WebElement payment=fluentWait(By.cssSelector("div.logo-co.logo-co-"+key));
+		    	payment.click();
+		    	log.info("Payment method chosen = "+key);
+		    	isExist=true;
+		    } catch (Exception e) {
+		    	isExist=false;
+		    	log.info("failed to choose payment method");
+		    }
+		}
+		
 		if(isExist){
-			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
+			driver.findElement(By.xpath("//button[text()[contains(.,'Lanjut')]]")).click();
 			log.info("Continue to Order Review");
 		}
 	}
 
 	public static void vtdirectPayment(){
-		boolean isExist;
 		try {
-	    	WebElement payment=fluentWait(By.id("vtdirect"));
-	    	payment.click();
+			driver.findElement(By.cssSelector("div[data-src='#modal-vtdirect']")).click();
 	    	log.info("Payment method chosen = Credit Card vtdirect");
 	    	String ccbin="4811111111111114";
 	    	String ccname="febry";
@@ -185,22 +225,17 @@ public class Checkout extends LogDriver {
 	    	Select yearDropdown = new Select(driver.findElement(By.id("vtdirect_expiration_yr")));
 	    	yearDropdown.selectByValue(year);
 	    	log.info("cc year= "+year);	
-	    	isExist=true;
+	    	
+	    	driver.findElement(By.xpath("//button[text()[contains(.,'Lanjut')]]")).click();
+			log.info("Continue to Order Review");
 	    } catch (Exception e) {
-	    	isExist=false;
 	    	log.info("failed to choose payment method");
 	    }
-		if(isExist){
-			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
-			log.info("Continue to Order Review");
-		}
 	}
 	
 	public static void xenditPayment(){
-		boolean isExist;
 		try {
-	    	WebElement payment=fluentWait(By.id("xendit"));
-	    	payment.click();
+			driver.findElement(By.cssSelector("div[data-src='#modal-xendit']")).click();
 	    	log.info("Payment method chosen = Credit Card Xendit");
 	    	String ccbin="4000000000000002";
 	    	String ccname="febry";
@@ -219,15 +254,12 @@ public class Checkout extends LogDriver {
 	    	Select yearDropdown = new Select(driver.findElement(By.id("xendit_expiration_yr")));
 	    	yearDropdown.selectByValue(year);
 	    	log.info("cc year= "+year);	
-	    	isExist=true;
+
+			driver.findElement(By.xpath("//button[text()[contains(.,'Lanjut')]]")).click();
+			log.info("Continue to Order Review");
 	    } catch (Exception e) {
-	    	isExist=false;
 	    	log.info("failed to choose payment method");
 	    }
-		if(isExist){
-			driver.findElement(By.xpath("//button[text()[contains(.,'Review')]]")).click();
-			log.info("Continue to Order Review");
-		}
 	}
 	
 	public static void orderReviewLog(){
