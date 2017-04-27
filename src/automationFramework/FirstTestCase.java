@@ -20,22 +20,22 @@ public class FirstTestCase {
         Customer.doLogin();
         //search term
 //        Search.searchBySKU("TOIL-FORM-004A");	
-//        Search.searchBySKU("SUSU-MORI-006A");
-//        Product.clickFirstProduct();
+        Search.searchBySKU("SUSU-MORI-006B");
+        Product.clickFirstProduct();
         //quantity
-//        Product.addSimpleProd(1);
-//        Checkout.checkoutCart();
+        Product.addSimpleProd(1);
+        Checkout.checkoutCart();
 //        Checkout.useVoucherCart("feb008");
-//        Checkout.cartLog();
-        Checkout.checkoutSkipCart();
+        Checkout.cartLog();
+//        Checkout.checkoutSkipCart();
         //address index, shipping method Free,Express, Standard, Tempat
         Checkout.chooseAddress(2,"Free");
         //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfermandiri
-        Checkout.choosePayment("vtdirect");
-//        Checkout.orderReviewLog();
-//        Checkout.placeOrder();
-//        Checkout.successPageLog();
-//        Customer.doLogout();
+        Checkout.choosePayment("transferbri");
+        Checkout.orderReviewLog();
+        Checkout.placeOrder();
+        Checkout.successPageLog();
+        Customer.doLogout();
         LogDriver.exitBrowser();
         
 	}

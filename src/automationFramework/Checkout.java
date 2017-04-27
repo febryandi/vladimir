@@ -262,55 +262,73 @@ public class Checkout extends LogDriver {
 	    }
 	}
 	
-	public static void orderReviewLog(){
+	public static void orderReviewLog()throws InterruptedException{
 		try {
-	        WebElement address = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[2]/div[2]/div/p"));
+	        WebElement address = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[2]/div[2]"));
 			log.info("address : "+address.getText());
 	    } catch (Exception e) {
 	        log.info("address 404");
 	    }
 		try {
-			WebElement payment = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[3]/div[2]"));
+			WebElement payment = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[1]/div[2]]"));
 			log.info("payment method : "+payment.getText());
 	    } catch (Exception e) {
 	        log.info("payment 404");
 	    }
+		
+		driver.findElement(By.className("lihat-detail-transaksi")).click();
+
 		try {
-			WebElement shipping = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[3]/div[3]"));
-			log.info("shipping method : "+shipping.getText());
+			WebElement subtotal = fluentWait(By.xpath("//*[@id='modal-detil-transaksi']/div/div[2]/div/span[2]"));
+			log.info("subtotal : "+subtotal.getText());
 	    } catch (Exception e) {
-	        log.info("shipping 404");
+	        log.info("subtotal 404");
 	    }
 		try {
-			WebElement subtotal = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[2]/div[2]"));
-			log.info("Subtotal : "+subtotal.getText());
+			WebElement shippingMethod = fluentWait(By.xpath("//span[text()[contains(.,'Total Belanja')]]/following-sibling::span"));
+			log.info("shipping Method : "+shippingMethod.getText());
 	    } catch (Exception e) {
-	        log.info("Subtotal 404");
+	        log.info("shipping Method 404");
 	    }
 		try {
-			WebElement shippingFee = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[3]/div[2]"));
-			log.info("shipping fee : "+shippingFee.getText());
+			WebElement estimated = fluentWait(By.className("shipping-eta"));
+			log.info("Estimated Delivery : "+estimated.getText());
 	    } catch (Exception e) {
-	        log.info("shippingFee 404");
+	        log.info("Estimated Delivery 404");
 	    }
 		try {
-			WebElement discount = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[4]/div[2]"));
+			WebElement shippingFee = fluentWait(By.cssSelector("span.price.rincian"));
+			log.info("shipping Fee : "+shippingFee.getText());
+	    } catch (Exception e) {
+	        log.info("shipping Fee 404");
+	    }
+		try {
+			WebElement discount = fluentWait(By.xpath("//span[text()[contains(.,'Diskon')]]/following-sibling::span"));
 			log.info("discount : "+discount.getText());
 	    } catch (Exception e) {
 	        log.info("discount 404");
 	    }
 		try {
-			WebElement oramiCredit = fluentWait(By.xpath("//*[@id='points_amount']/div[2]"));
-			log.info("oramiCredit : "+oramiCredit.getText());
+			WebElement discountDesc = fluentWait(By.xpath("//span[text()[contains(.,'Keterangan')]]"));
+			log.info("discount Desc : "+discountDesc.getText());
 	    } catch (Exception e) {
-	        log.info("oramiCredit 404");
+	        log.info("discount Desc 404");
 	    }
 		try {
-			WebElement grandTotal = fluentWait(By.xpath("//*[@id='checkout-order-review']/div[5]/div[1]/div/div[6]/div[2]"));
-			log.info("grandTotal : "+grandTotal.getText());
+			WebElement oramiCredit = fluentWait(By.xpath("//span[text()[contains(.,'Point')]]/following-sibling::span"));
+			log.info("Orami Credit : "+oramiCredit.getText());
 	    } catch (Exception e) {
-	        log.info("grandTotal 404");
-	    }				
+	        log.info("Orami Credit 404");
+	    }
+		try {
+			WebElement grandtotal = fluentWait(By.cssSelector("span.price.bold.total"));
+			log.info("grandtotal : "+grandtotal.getText());
+	    } catch (Exception e) {
+	        log.info("grandtotal 404");
+	    }
+		driver.findElement(By.className("fancybox-close-small")).click();
+
+    	Thread.sleep(1000);
 	}
 	
 	public static void placeOrder(){
