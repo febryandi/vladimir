@@ -33,8 +33,8 @@ public class FirstTestCase {
         //mandiriecash, xendit, oramicash, vtdirect, transferbri, klikbca,klikpay,virtualaccountbca, transferbni, transfermandiri
         Checkout.choosePayment("transferbri");
         Checkout.orderReviewLog();
-        Checkout.placeOrder();
-        Checkout.successPageLog();
+//        Checkout.placeOrder();
+//        Checkout.successPageLog();
         Customer.doLogout();
         LogDriver.exitBrowser();
         

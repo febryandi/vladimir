@@ -32,7 +32,7 @@ public class LogDriver {
 		//fluent wait function, timout 6sc and checking every 1 sc
 		public static WebElement fluentWait(final By locator){
 			Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-					.withTimeout(6, TimeUnit.SECONDS)
+					.withTimeout(7, TimeUnit.SECONDS)
 					.pollingEvery(1, TimeUnit.SECONDS)
 					.ignoring(NoSuchElementException.class);
 			

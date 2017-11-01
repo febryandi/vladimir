@@ -11,7 +11,7 @@ public class Search extends LogDriver{
 		log.info("sku "+sku);
 		
 		WebElement searchField=driver.findElement(By
-				.xpath("//input[@placeholder='Nama produk, kategori atau brand']"));
+				.xpath("//input[@placeholder='Cari produk, kategori atau brand…']"));
 		searchField.sendKeys(Keys.chord(Keys.CONTROL,"a"),sku);
 		driver.findElement(By.className("search-button")).click();
 		log.info("search button clicked");   

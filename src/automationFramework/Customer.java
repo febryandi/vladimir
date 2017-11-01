@@ -6,20 +6,20 @@ import org.openqa.selenium.interactions.Actions;
 
 public class Customer extends LogDriver{
 	
-		public static void doLogin(){
+		public static void doLogin() throws InterruptedException{
 				
         //Launch the Online Store Website
-		driver.get("https://charlie.orami.co.id");
+		driver.get("https://www.orami.co.id");
 		log.info("opening website");
  		
-
-//		driver.findElement(By.id("ematic_closeExitIntentOverlay_2_x_1")).click();
-//		driver.findElement(By.className("insRouletteClose")).click();
+		//close ematic if any
+		WebElement ematicPopout = fluentWait(By.cssSelector("#ematic_closeExitIntentOverlay_2_xl_1_0"));
+		ematicPopout.click();
 		
-		
+		Thread.sleep(1000);
 		
 		//find login button
-		driver.findElement(By.cssSelector("button.btn.btn-primary.btn-sm")).click();
+		driver.findElement(By.className("title-membernav")).click();
 		
 		//input email
 		WebElement loginfield=driver.findElement(By.id("email"));
